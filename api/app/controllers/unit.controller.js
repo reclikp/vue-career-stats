@@ -46,6 +46,21 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.findByID = (req, res) => {
+    const condition = req.query.id ? { id: { [Op.like]: `%${req.query.id}%` } } : null;
+
+    Unit.findAll({ where: condition })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || 'Some error occured while retrieving units.'
+            });
+        });
+};
+
 exports.update = (req, res) => {
     const id = req.params.id;
 

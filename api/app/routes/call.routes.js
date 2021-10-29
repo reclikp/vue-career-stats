@@ -5,7 +5,9 @@ module.exports = app => {
 
     router.post('/', call.create);
 
-    router.get('/', call.findAll)
+    router.get('/', call.findAll);
+
+    router.get('/totalTime', call.getTotalCallTime);
 
     app.use('/api/call', router);
 };

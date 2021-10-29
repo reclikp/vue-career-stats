@@ -7,6 +7,8 @@ module.exports = app => {
 
     router.get('/', unit.findAll);
 
+    router.get('/:id', unit.findByID);
+
     router.put('/:id', unit.update);
 
     router.delete('/:id', unit.delete);
