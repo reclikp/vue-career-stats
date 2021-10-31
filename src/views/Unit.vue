@@ -1,52 +1,42 @@
 <template>
     <div class="main">
-        <h1>Lista Jednostek</h1>
-        <DataTableList :list_data="list_data" />
+        <h1>Jednostka #{{ data.id }}</h1>
+        <p>{{ data.name }}</p>
+        <p>{{ data.city }}</p>
     </div>
 </template>
 
 <script>
     import UnitDataService from '../services/UnitDataService';
-    import DataTableList from '../components/DataTableList.vue';
 
     export default {
-        name: 'units-list',
-        components: {
-            DataTableList
-        },        
+        name: 'units-list',      
         data() {
             return {
                 currentUnit: null,
                 currentIndex: -1,
                 name: "",
-                list_data: {
-                    rows: [],
-                    columns_display_names: ['name', 'city'],
-                    columns: ['Nazwa jednostki', 'Lokalizacja']
-                }
+                data: [],
+                id: this.$route.params.id
             };
         }, 
         methods: {
-            retrieveUnits() {
-                UnitDataService.getAll()
+            retrieveUnit() {
+                UnitDataService.get(this.id)
                     .then(response => {
-                        this.list_data.rows = response.data;
+                        this.data = response.data;
                         console.log(response.data);
                     })
                     .catch(e => {
                         console.log(e);
                     })
-            },
-            setActiveUnit(unit, index) {
-                this.currentUnit = unit;
-                this.currentIndex = index;
             }
         },
         created() {
-            this.retrieveUnits();
+            this.retrieveUnit();
         },
         mounted() {
-            this.retrieveUnits();
+            this.retrieveUnit();
         }
     };
 </script>

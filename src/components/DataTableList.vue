@@ -9,7 +9,7 @@
             <tbody>
                 <tr v-for="(row, index) in list_data.rows" :key="index">
                     <td v-for="row_name in list_data.columns_display_names" :key="row_name">
-                        <router-link to="/" v-if="row_name.includes('Id')">{{ row[row_name] }}</router-link>   
+                        <router-link :to="{ name: 'unit', params: { id: row[row_name] } }" v-if="row_name.includes('Id')">{{ row[row_name] }}</router-link>   
                         <span v-else>{{ row[row_name] }}</span>
                     </td>
                 </tr>

@@ -46,17 +46,23 @@ exports.findAll = (req, res) => {
         });
 };
 
-exports.findByID = (req, res) => {
-    const condition = req.query.id ? { id: { [Op.like]: `%${req.query.id}%` } } : null;
+exports.findOne = (req, res) => {
+    const id = req.params.id;
 
-    Unit.findAll({ where: condition })
+    Unit.findByPk(id)
         .then(data => {
-            res.send(data);
+            if(data) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot fint Unit with id=${id}.`
+                });
+            }
         })
         .catch(err => {
+            console.log(err);
             res.status(500).send({
-                message:
-                    err.message || 'Some error occured while retrieving units.'
+                message: 'Error retrieving Unit with id='+id
             });
         });
 };

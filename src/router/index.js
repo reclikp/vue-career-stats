@@ -18,7 +18,9 @@ const routes = [
   },
   {
     path: '/unit/:id',
-    component: Unit
+    name: 'unit',
+    component: Unit,
+    params: true
   },
   {
     path: '/calls',
